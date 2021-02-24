@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.0.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>dev.silvio</groupId>
+    <artifactId>springboot.openapi</artifactId>
+    <version>1.0</version>
+    <name>OpenAPI with Tests</name>
+    <description>OpenAPI with Tests</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <aws.java.sdk.version>1.11.792</aws.java.sdk.version>
+        <springdoc.openapi.version>1.4.0</springdoc.openapi.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- aws -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-dynamodb</artifactId>
+            <version>${aws.java.sdk.version}</version>
+        </dependency>
+
+        <!-- Community module for DynamoDB -->
+        <!--        <dependency>-->
+        <!--            <groupId>com.github.derjust</groupId>-->
+        <!--            <artifactId>spring-data-dynamodb</artifactId>-->
+        <!--            <version>5.1.0</version>-->
+        <!--        </dependency>-->
+        <dependency>
+            <groupId>io.github.boostchicken</groupId>
+            <artifactId>spring-data-dynamodb</artifactId>
+            <version>5.2.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                    <!-- jar layered for dockerfile performance -->
+                    <layers>
+                        <enabled>true</enabled>
+                    </layers>
+                </configuration>
+
+                <!-- generation api file at runtime -->
+                <!-- <executions> -->
+                <!-- <execution> -->
+                <!-- <id>pre-integration-test</id> -->
+                <!-- <goals> -->
+                <!-- <goal>start</goal> -->
+                <!-- </goals> -->
+                <!-- </execution> -->
+                <!-- <execution> -->
+                <!-- <id>post-integration-test</id> -->
+                <!-- <goals> -->
+                <!-- <goal>stop</goal> -->
+                <!-- </goals> -->
+                <!-- </execution> -->
+                <!-- </executions> -->
+            </plugin>
+
+            <!-- generation api file at runtime -->
+            <!-- <plugin> -->
+            <!-- <groupId>org.springdoc</groupId> -->
+            <!-- <artifactId>springdoc-openapi-maven-plugin</artifactId> -->
+            <!-- <version>1.1</version> -->
+            <!-- <executions> -->
+            <!-- <execution> -->
+            <!-- <phase>integration-test</phase> -->
+            <!-- <goals> -->
+            <!-- <goal>generate</goal> -->
+            <!-- </goals> -->
+            <!-- </execution> -->
+            <!-- </executions> -->
+            <!-- <configuration> -->
+            <!-- <apiDocsUrl>http://localhost:8080/api-docs</apiDocsUrl> -->
+            <!-- <outputFileName>openapi.json</outputFileName> -->
+            <!-- <outputDir>${project.build.directory}</outputDir> -->
+            <!-- </configuration> -->
+            <!-- </plugin> -->
+        </plugins>
+
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+    </build>
+</project>
